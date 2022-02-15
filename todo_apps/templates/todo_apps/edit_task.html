@@ -1,0 +1,16 @@
+{% extends 'todo_apps/base.html' %}
+
+{% block content %}
+
+    <p>Edit task:</p>
+
+    <form method='post' action="{% url 'todo_apps:edit_task' task.id %}">
+        {% csrf_token %}
+        {{ form }}
+        <div>
+            <button name='submit'>Save</button>
+            <a href="{% url 'todo_apps:delete_task' task.id %}">Delete</a>
+        </div>
+    </form>   
+
+{% endblock content %}

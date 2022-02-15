@@ -1,5 +1,11 @@
 <p>
     <a href="{% url 'todo_apps:index' %}">Todo app</a>
+    <a href="{% url 'todo_apps:tasks' %}">My Tasks</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'users:logout' %}">Log out</a>
+    {% else %}
+        <a href="{% url 'users:login' %}">Log In</a>
+    {% endif %}     
 </p>
 
 {% block content %} {% endblock content %} 

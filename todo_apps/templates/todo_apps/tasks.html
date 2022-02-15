@@ -1,0 +1,20 @@
+{% extends "todo_apps/base.html" %}
+
+{% block content %}
+
+    <p>Tasks:</p>
+
+    <ul>
+        {% for task in tasks %}
+            <p><a href="{% url 'todo_apps:edit_task' task.id %}">{{ task }}</a><br>
+            {{ task.text_desc }}
+            </p>
+            <br>
+        {% empty %}
+            <li>Doesn't have tasks</li>   
+        {% endfor %}     
+    </ul>
+    <a href={% url 'todo_apps:new_task' %}><button>Add new task</button></a>
+
+
+{% endblock content %}
