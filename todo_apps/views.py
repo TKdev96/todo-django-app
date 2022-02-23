@@ -66,5 +66,5 @@ def edit_task(request, task_id):
             return redirect('todo_apps:tasks')
 
     context = {'task': task, "form": form}
-    return render(request, 'todo_apps/edit_task.html', context)
+    return render(request, 'todo_apps/tasks.html', context)
 

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'todo_apps',
     'users',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/users/login/'
 
+BOOTSTRAP5 = {
+'include_jquery': True,
+}
