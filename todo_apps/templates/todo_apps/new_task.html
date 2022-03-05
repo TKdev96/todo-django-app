@@ -1,10 +1,61 @@
-{% extends "todo_apps/base.html" %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
 
-{% block content %}
-    <p>Add new task:</p>
+{% comment %}     <p>Add new task:</p>
     <form method='post' action="{% url 'todo_apps:new_task' %}">
         {% csrf_token %}
         {{ form }}
         <button name="submit">Add</button>
-    </form>    
-{% endblock content %}
+    </form>   {% endcomment %}  
+
+    <form hx-post="{% url 'todo_apps:new_task'  %}">
+        {% csrf_token %}
+        <div class="modal-header">
+            
+          <h5 class="modal-title">Add New Task:</h5>
+          
+          
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          {{ form }}
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" id="save-edit-task" type="submit">Confirm</button>
+        </div>
+      </form>
+
+      <script>
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+
+        // Get the button save
+        var saveBtn = document.getElementById("save-edit-task")
+
+        saveBtn.onclick = function() {
+            setTimeout(() => {window.location.reload(true)}, 10);
+        }
+
+     // Get the button save
+        var deleteBtn = document.getElementById("delete-task")
+
+        deleteBtn.onclick = function() {
+            setTimeout(() => {window.location.reload(true)}, 10);
+        }
+
+
+
+
+    </script>

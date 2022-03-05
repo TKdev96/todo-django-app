@@ -1,8 +1,10 @@
+from imp import reload
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Task
 from .forms import TaskForm
-from django.http import Http404
+from django.http import Http404, HttpResponse
+import json
 
 def check_topic_owner(request, task):
     if task.owner != request.user:
@@ -63,8 +65,8 @@ def edit_task(request, task_id):
         form = TaskForm(instance=task, data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('todo_apps:tasks')
+
 
     context = {'task': task, "form": form}
-    return render(request, 'todo_apps/tasks.html', context)
+    return render(request, 'todo_apps/edit_task.html', context)
 

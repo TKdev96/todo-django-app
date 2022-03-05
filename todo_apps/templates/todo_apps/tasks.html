@@ -6,7 +6,7 @@
         .modal {
         display: none; /* Hidden by default */
         position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
+        z-index: 4; /* Sit on top */
         padding-top: 100px; /* Location of the box */
         left: 0;
         top: 0;
@@ -23,7 +23,7 @@
         margin: auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%;
+        width: 50%;
         }
 
         /* The Close Button */
@@ -39,7 +39,14 @@
         color: #000;
         text-decoration: none;
         cursor: pointer;
-        }   
+        }
+        
+        .task-item {
+            color: gray;
+        }
+        .task-item:hover {
+            color: #6f42c1;
+        }
 </style>   
 
 
@@ -52,48 +59,49 @@
             <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"></path>
         </svg>
         <div class="lh-1">
-        <h1 class="h6 mb-0 text-white lh-1">My Tasks</h1>
+            <h1 class="h5 mb-0 text-white lh-1">My Tasks</h1>
         </div>
+        
     </div>
 
     <div class="my-3 p-3 bg-body rounded shadow-sm">
 
         {% for task in tasks %}
             <div class="d-flex text-muted pt-4">
-                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 0.500rem;" width="16" height="16" fill="currentColor" class="bi bi-pencil-square mt-2" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 1.200rem;" width="16" height="16" fill="currentColor" class="bi bi-pencil-square mt-3" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
                   </svg>
 
-            <p class="pb-3 mb-0 small lh-sm">
-                <a class="myBtn d-block text-decoration-none" style="color: gray;" onclick="getTaskId(this)" data-task-id="{{ task.id }}" href="#" {% comment %} href="{% url 'todo_apps:edit_task' task.id %} "{% endcomment %}><strong>{{ task.text_title }}</strong></a>
-                {{ task.text_desc }}
-                {{ task.id }}
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div>
-                    <p id="edit-task-id"></p>
-                    <button type="button">Testing</button>
-                    </form>   
-                </div>
-            </div>
-        </div>
+            <p class="pb-3 mb-0 small lh-sm" hx-trigger="click" hx-get="{% url 'todo_apps:edit_task' task.id %}" hx-target="#dialog">
+                <a class="myBtn d-block text-decoration-none task-item h6"><strong>{{ task.text_title }}</strong></a>
+                <strong>Description:</strong> {{ task.text_desc }}<br/>
+                <strong>Date created:</strong> {{ task.date_added | date:'d M, Y' }}
+        
             </p>
 
             
             </div>
+
             <hr style="background-color: #dee2e6 1px solid">
         {% empty %}
             <p>No tasks added!</p>
         {% endfor %}    
             
-        <small class="d-block text-end mt-3">
-        <a href="#">All updates</a>
-        </small>
+
+
+        <div class="d-block text-end mt-3">
+            <button class="myBtn btn btn-outline-primary btn-sm" hx-get="{% url 'todo_apps:new_task' %}" hx-target="#dialog">+ Add task</a></button>
+        </div>
+
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+
+                    <!-- Modal content -->
+                    <div id="dialog" class="modal-content" hx-target="this">
+                    </div>
+                    
+                </div>
     </div>
   
   
@@ -116,18 +124,6 @@
         btn[i].onclick = function() { 
         modal.style.display = "block";
         }}
-        
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-        
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        }
 
 
     </script>
