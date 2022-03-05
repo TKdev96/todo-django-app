@@ -8,7 +8,7 @@ class Task(models.Model):
     text_desc = models.TextField(max_length=10000, default='')
     date_added = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    comment = models.TextField(max_length=10000, default='')
 
     def __str__(self):
         return self.text_title
