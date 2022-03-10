@@ -1,10 +1,9 @@
-from imp import reload
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Task
 from .forms import TaskForm
-from django.http import Http404, HttpResponse
-import json
+from django.http import Http404
+
 
 def check_topic_owner(request, task):
     if task.owner != request.user:
@@ -22,8 +21,11 @@ def delete_task(request, task_id):
 
 # Create your views here.
 
+@login_required
 def index(request):
-    return render(request, 'todo_apps/index.html')
+    tasks = Task.objects.filter(owner=request.user) #for badge counter on index.html
+    context = {'tasks': tasks}
+    return render(request, 'todo_apps/index.html', context)
 
 @login_required
 def tasks(request):

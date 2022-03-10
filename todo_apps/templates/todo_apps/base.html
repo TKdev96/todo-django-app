@@ -103,6 +103,7 @@
     
 
   </head>
+  {% if user.is_authenticated %}
   <body class="bg-light">
     
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
@@ -114,11 +115,15 @@
 
             <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'todo_apps:tasks' %}">My Tasks</a>
+                <li class="nav-item mt-2">
+                <a class="nav-link active d-inline" aria-current="page" href="{% url 'todo_apps:tasks' %}">My Tasks</a>
+                {% if user.is_authenticated %}
+                <span class="d-inline badge bg-light text-dark rounded-pill" style="margin-left:-5px;">
+                  {{ tasks.count }}</span>
                 </li>
+                {% endif %}
                 <li class="nav-item">
-                <a class="nav-link" href="#">Notifications</a>
+                <a class="nav-link"></a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
@@ -178,7 +183,7 @@
         </nav>
         </div>
 
-
+{% endif %}
 
 {% block content %} {% endblock content %}
           <!-- HTMX CDN -->

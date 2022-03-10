@@ -1,5 +1,9 @@
 {% load bootstrap5 %}
 {% bootstrap_css %}
+{% load widget_tweaks %}
+
+
+
 {% comment %}     <p>Edit task:</p>
 
     <form method='post' action="{% url 'todo_apps:edit_task' task.id %}" class="modal-content">
@@ -20,16 +24,29 @@
           
           <span class="close">&times;</span>
         </div>
-        <div class="modal-body">
-          {{ form.as_p }}
+        <div class="modal-body pb-4">
+          {% for field in form.visible_fields %}
+            <div class="form-group mt-4">
+                <strong>{{ field.label_tag }}</strong>
+                {% render_field field class="form-control mt-3 form-control-sm" style="max-height: 150px;" %}
+            </div>
+          {% endfor %}  
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-danger" id="delete-task" hx-post="{% url 'todo_apps:delete_task' task.id %}">Delete</button>
-            <button class="btn btn-success" id="save-edit-task" type="submit">Save</button>
+        <div class="modal-footer d-flex bd-highlight">
+            <div class="flex-grow-1 bd-highlight">
+                <button class="btn btn-danger" id="delete-task" hx-post="{% url 'todo_apps:delete_task' task.id %}">Delete</button>
+            </div>   
+            <div class="bd-highlight">
+                <button class="d-inline btn btn-secondary" id="cancel-task">Cancel</button>
+            </div>
+            <div class="bd-highlight">    
+                <button class="d-inline btn btn-success" id="save-edit-task" type="submit">Confirm</button>
+            </div>   
         </div>
       </form>
 
-      <script>
+
+    <script>
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
         
@@ -52,15 +69,19 @@
             setTimeout(() => {window.location.reload(true)}, 10);
         }
 
+        // Get the button cancel
+        var cancelBtn = document.getElementById("cancel-task")
+
+        cancelBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
      // Get the button save
         var deleteBtn = document.getElementById("delete-task")
 
         deleteBtn.onclick = function() {
             setTimeout(() => {window.location.reload(true)}, 10);
         }
-
-
-
 
     </script>
 
