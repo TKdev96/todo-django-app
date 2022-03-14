@@ -29,7 +29,7 @@ def index(request):
 
 @login_required
 def tasks(request):
-    tasks = Task.objects.filter(owner=request.user).order_by('date_added')
+    tasks = Task.objects.filter(owner=request.user).order_by('date_due')
 
     if request.method != 'POST':
         form = TaskForm()
