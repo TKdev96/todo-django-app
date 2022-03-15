@@ -115,16 +115,9 @@
 
             <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item mt-2">
-                <a class="nav-link active d-inline" aria-current="page" href="{% url 'todo_apps:tasks' %}">My Tasks</a>
-                {% if user.is_authenticated %}
-                <span class="d-inline badge bg-light text-dark rounded-pill" style="margin-left:-5px;">
-                  {{ tasks.count }}</span>
-                </li>
-                {% endif %}
                 <li class="nav-item">
-                <a class="nav-link"></a>
-                </li>
+                  <a class="nav-link"></a>
+                  </li>
                 <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
                 </li>
@@ -168,12 +161,15 @@
 
         <div class="nav-scroller bg-body shadow-sm">
         <nav class="nav nav-underline" aria-label="Secondary navigation">
-            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-            <a class="nav-link" href="#">
-            Friends
-            <span class="badge bg-light text-dark rounded-pill align-text-bottom">27</span>
+            <a class="nav-link active" aria-current="page" href="{% url 'todo_apps:tasks' %}">
+              My Tasks
+            <span class="badge bg-light text-dark rounded-pill align-text-bottom">{{ tasks.count }}</span>
             </a>
-            <a class="nav-link" href="#">Explore</a>
+            <a class="nav-link" href="{% url 'todo_apps:all_tasks' %}">
+              All Tasks
+            <span class="badge bg-light text-dark rounded-pill align-text-bottom">{{ all_tasks.count}}</span>
+            </a>
+            <a class="nav-link" href="{% url 'todo_apps:completed_tasks' %}">Completed Tasks</a>
             <a class="nav-link" href="#">Suggestions</a>
             <a class="nav-link" href="#">Link</a>
             <a class="nav-link" href="#">Link</a>

@@ -18,14 +18,37 @@
           
           <span class="close">&times;</span>
         </div>
-        <div class="modal-body pb-4">
-            {% for field in form.visible_fields %}
-              <div class="form-group mt-4">
-                  <strong>{{ field.label_tag }}</strong>
-                  {% render_field field class="form-control mt-3 form-control-sm" style="max-height: 150px;" %}
-              </div>
-            {% endfor %}  
-        </div>
+
+        <div class="modal-body overflow-auto pb-4">
+          
+          <div class="form-group mt-4">
+            <strong>Title: </strong>
+            {% render_field form.text_title class="form-control mt-3 form-control-sm" style="max-height: 150px;" %}
+          </div>  
+
+          <div class="form-group mt-4">
+            <strong>Description: </strong>
+            {% render_field form.text_desc class="form-control mt-3 form-control-sm" style="max-height: 110px;" %}
+          </div>  
+
+          <div class="form-group mt-4">
+            <strong>Comment: </strong>
+            {% render_field form.comment class="form-control mt-3 form-control-sm" style="max-height: 80px;" %}  
+          </div>  
+
+          <div class="d-flex bd-highlight">
+            <div class="form-group mt-4 bd-highlight">  
+              <strong>Due Date: </strong>
+              {% render_field form.date_due|attr:"type:date" class="form-control mt-3 form-control-sm" style="max-width: 150px;" %}
+            </div>
+            <div class="form-group mt-4 bd-highlight" style="margin-left: 2.5rem;">
+              <strong>Assigned To: </strong>
+              {% render_field form.owner|attr:"select" class="form-control mt-3 form-control-sm" %}
+            </div>
+          </div>
+
+      </div>
+
         <div class="modal-footer d-flex justify-content-end">
             <button class="d-inline btn btn-secondary" id="cancel-task">Cancel</button>
             <button class="btn btn-success" id="save-edit-task" type="submit">Confirm</button>

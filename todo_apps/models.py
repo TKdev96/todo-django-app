@@ -10,6 +10,7 @@ class Task(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField(max_length=10000, default='')
     date_due = models.DateField()
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.text_title

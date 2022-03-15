@@ -24,12 +24,14 @@ def delete_task(request, task_id):
 @login_required
 def index(request):
     tasks = Task.objects.filter(owner=request.user) #for badge counter on index.html
-    context = {'tasks': tasks}
+    all_tasks = Task.objects
+    context = {'tasks': tasks, 'all_tasks': all_tasks}
     return render(request, 'todo_apps/index.html', context)
 
 @login_required
 def tasks(request):
-    tasks = Task.objects.filter(owner=request.user).order_by('date_due')
+    tasks = Task.objects.filter(owner=request.user, status=False).order_by('date_due')
+    all_tasks = Task.objects.filter(status=False)
 
     if request.method != 'POST':
         form = TaskForm()
@@ -39,8 +41,23 @@ def tasks(request):
             form.save()
             return redirect('todo_apps:tasks')    
 
-    context = {'tasks': tasks}
+    context = {'tasks': tasks, 'all_tasks': all_tasks}
     return render(request, 'todo_apps/tasks.html', context)
+
+@login_required
+def all_tasks(request):
+    all_tasks = Task.objects.filter(status=False).order_by('date_due')
+    tasks = Task.objects.filter(owner=request.user, status=False)
+    context = {'all_tasks': all_tasks, 'tasks': tasks}
+    return render(request, 'todo_apps/all_tasks.html', context)
+
+@login_required
+def completed_tasks(request):
+    completed_tasks = Task.objects.filter(status=True).order_by('date_due')
+    all_tasks = Task.objects.filter(status=False)
+    tasks = Task.objects.filter(owner=request.user, status=False)
+    context = {'completed_tasks': completed_tasks, 'all_tasks': all_tasks, 'tasks': tasks}
+    return render(request, 'todo_apps/completed_tasks.html', context)
 
 @login_required
 def new_task(request):

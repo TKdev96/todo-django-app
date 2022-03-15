@@ -61,7 +61,7 @@
             <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"></path>
         </svg>
         <div class="lh-1">
-            <h1 class="h5 mb-0 text-white lh-1">Assigned to me</h1>
+            <h1 class="h5 mb-0 text-white lh-1">All Tasks</h1>
         </div>
     </div>
 
@@ -70,7 +70,7 @@
             <button class="myBtn btn btn-outline-primary btn-sm" hx-get="{% url 'todo_apps:new_task' %}" hx-target="#dialog">+ Add task</a></button>
         </div>
 
-        {% for task in tasks %}
+        {% for task in all_tasks %}
             <div class="d-flex text-muted pt-3">
                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 1.200rem;" width="16" height="16" fill="currentColor" class="bi bi-pencil-square mt-3" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
@@ -95,9 +95,6 @@
             <p>No tasks added!</p>
         {% endfor %}    
             
-
-
-
 
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
