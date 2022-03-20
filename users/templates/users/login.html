@@ -74,10 +74,11 @@
     <p>Username and password isn't valid!</p>
     {% endif %}
     <div id="loader"></div>
-    <form id="auth-form" class="form-signin" hx-post="{% url 'users:login' %}">
+    <form id="auth-form" class="form-signin text-center" hx-post="{% url 'users:login' %}">
     {% csrf_token %}
     <div>
-    
+        <h1>TaskiDoo</h1>
+        <h5 class="font-weight-normal">Please sign in</h5>
         <div class="form-group mt-4">
             <label class="sr-only" for="{{ form.username.id_for_label }}">Login</label>
             {% render_field form.username class="form-control" placeholder="Login" type="text" %}
@@ -89,9 +90,13 @@
         </div>
 
     </div>
-    <button class="btn btn-lg btn-primary btn-block" onclick="redirect()" name="submit">Log in</button>
+    <button class="btn btn-primary btn-lg btn-block" style="width: 300px; max-width: 300 px;" onclick="redirect()" name="submit">Sign In</button>
     <input type="hidden" name="next"  value="{% url 'todo_apps:tasks' %}" />
-    </form>
+    <div class="mt-2">
+    <a href="{% url 'users:register' %}">Create an account</a>  
+    </div>
+  </form>
+  
 
   <script>
     var loader = document.getElementById('loader')

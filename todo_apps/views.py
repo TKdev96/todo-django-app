@@ -23,8 +23,8 @@ def delete_task(request, task_id):
 
 @login_required
 def index(request):
-    tasks = Task.objects.filter(owner=request.user) #for badge counter on index.html
-    all_tasks = Task.objects
+    tasks = Task.objects.filter(owner=request.user, status=False) #for badge counter on index.html
+    all_tasks = Task.objects.filter(status=False)
     context = {'tasks': tasks, 'all_tasks': all_tasks}
     return render(request, 'todo_apps/index.html', context)
 
