@@ -5,6 +5,12 @@
     <p>Todo app content</p>
     <p>
         Welcome, {{ user.username }}.
-    </p>   
+    </p>     
+        {% for project in projects  %}
+            <ul>
+                <li> projekt: {{ project.id }}</li>
+            </ul>
+        {% endfor %}    
+      
 </div>    
 {% endblock content %}
