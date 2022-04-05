@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Project, Task
+from .models import Project, Task, User
 from .forms import TaskForm
 from django.http import Http404
 
@@ -63,18 +63,20 @@ def completed_tasks(request):
 
 @login_required
 def new_task(request):
-    projects = Project.objects.filter(assigned_users=request.user)
     if request.method != 'POST':
-        form = TaskForm()
+        assigned = Project.objects.get(assigned_users=request.user)
+        print(assigned)
+        form = TaskForm(initial={'owner': request.user, 'project': assigned})
     else:
         form = TaskForm(request.POST)
         if form.is_valid():
             newtask = form.save(commit=False)
             #newtask.owner = request.user
+            newtask.project = Project.objects.get(assigned_users=request.user)
             newtask.save()
             return redirect('todo_apps:tasks')    
 
-    context = {'projects': projects,'form': form}
+    context = {'form': form}
     return render(request, 'todo_apps/new_task.html', context)
 
 @login_required
@@ -85,7 +87,10 @@ def edit_task(request, task_id):
     else:
         form = TaskForm(instance=task, data=request.POST)
         if form.is_valid():
-            form.save()
+            edit_task = form.save(commit=False)
+            edit_task.project = Project.objects.get(assigned_users=request.user)
+            edit_task.save()
+            return redirect('todo_apps:tasks')
 
 
     context = {'task': task, "form": form}
