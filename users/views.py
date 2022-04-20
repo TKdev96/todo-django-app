@@ -21,4 +21,4 @@ def register(request):
             return redirect('todo_apps:index') #przekierowanie użytkownika na stronę główną
 
     context = {'form': form}
-    return render(request, 'users/register.html', context) 
+    return render(request, 'users/register.html', context)

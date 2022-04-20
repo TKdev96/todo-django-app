@@ -33,14 +33,11 @@
 
     <form id="auth-form" style="margin: auto; max-width:400px;" class="form-group text-center" hx-post="{% url 'users:register' %}">
         {% csrf_token %}
-        <h1>TaskiDoo</h1>
-        <h5 class="font-weight-normal">Please enter login & password</h5>
+        
+        <h5 class="font-weight-normal">Edit profile</h5>
 
         <div class="form-group mt-4">
                 {% render_field form.username class="form-control" placeholder="Login" type="text" %}
-        </div>
-        <div class="form-group mt-4">
-                {% render_field form.email class="form-control" placeholder="email" type="email" %}
         </div>
         <div class="form-group mt-4">
                 {% render_field form.password1 class="form-control" placeholder="Password" type="password" %}
@@ -49,7 +46,7 @@
                 {% render_field form.password2 class="form-control" placeholder="Enter the same password" type="password" %}
         </div>
 
-        <button class="btn btn-primary btn-lg btn-block mt-4" style="width: 400px; max-width:400px;" onclick="redirect()" name="submit">Register</button>
+        <button class="btn btn-primary btn-lg btn-block mt-4" style="width: 400px; max-width:400px;" onclick="redirect()" name="submit">Update profile</button>
         <input type="hidden" name="next" value="{% url 'todo_apps:tasks' %}"/>
     </form>
 </div>
