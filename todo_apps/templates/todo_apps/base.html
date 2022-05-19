@@ -12,7 +12,7 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 
-    <style>
+  <style>
 
         html,
         body {
@@ -23,7 +23,7 @@
         padding-top: 56px;
         }
 
-        @media (max-width: 991.98px) {
+        @media (max-width: 993.98px) {
         .offcanvas-collapse {
             position: fixed;
             top: 56px; /* Height of navbar */
@@ -41,6 +41,11 @@
             visibility: visible;
             transform: translateX(-100%);
         }
+
+        .navbar-collapse {
+          display: none;
+        }
+
         }
 
         .nav-scroller {
@@ -78,6 +83,7 @@
         color: #343a40;
         }
 
+
         .text-white-50 { color: rgba(255, 255, 255, .5); }
 
         .bg-purple { background-color: #6f42c1; }
@@ -98,6 +104,17 @@
         }
       }
 
+      #hambugerMenuIcon {
+        display: block;
+      }
+
+      #navbarsExampleDefault {
+        display: none;
+      }
+
+      #closeBtn {
+        display: none;
+      }
 
     </style>
     
@@ -106,37 +123,25 @@
   {% if user.is_authenticated %}
   <body class="bg-light">
     
-        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" style="z-index:4;" aria-label="Main navigation">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'todo_apps:index' %}"><i><b>TaskiDoo</i>!</b></a>
-            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+            <button class="navbar-toggler p-0 border-0" type="button" id="hamburgerMenuIcon">
             <span class="navbar-toggler-icon"></span>
             </button>
+            <button type="button" class="btn-close btn-close-white" aria-label="Close" id="closeBtn"></button>
 
-            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+
+            <div class="navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                   <a class="nav-link"></a>
                   </li>
-                <li class="nav-item">
-                <a class="nav-link" href="{% url 'users:profile' %}">Profile</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Switch account</a>
-                </li>
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown01">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-                </li>
             </ul>
             <ul class="navbar-nav me-0 mb-5 mb-lg-0">
             {% if user.is_authenticated %} 
             <li class="nav-item me-2">
-            <a class="nav-link">Welcome, {{ user.username }}.</a>
+            <a class="nav-link" href="{% url 'users:profile' %}">Logged: <b>{{ user.username }}</b></a>
             </li>   
             <li class="nav-item me-4">
                 <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
@@ -165,12 +170,6 @@
             <span class="badge bg-light text-dark rounded-pill align-text-bottom">{{ all_tasks.count}}</span>
             </a>
             <a class="nav-link" href="{% url 'todo_apps:completed_tasks' %}">Completed Tasks</a>
-            <a class="nav-link" href="#">Suggestions</a>
-            <a class="nav-link" href="#">Link</a>
-            <a class="nav-link" href="#">Link</a>
-            <a class="nav-link" href="#">Link</a>
-            <a class="nav-link" href="#">Link</a>
-            <a class="nav-link" href="#">Link</a>
         </nav>
         </div>
 
@@ -181,7 +180,25 @@
   <script src="https://unpkg.com/htmx.org@1.7.0"></script> 
 
   <!-- CSRF request in the headers -->
-  <script>
+  <script> 
+   //Get hamburger menu 
+  const hamburgerMenuIcon = document.getElementById("hamburgerMenuIcon");
+  const hambugerMenu = document.getElementById("navbarsExampleDefault");
+  const closeBtn = document.getElementById("closeBtn");
+  
+  hamburgerMenuIcon.onclick = function() {
+      hamburgerMenuIcon.style.display = 'none';
+      hambugerMenu.style.display = "block";
+      closeBtn.style.display = 'block';
+  };
+
+  closeBtn.onclick = function() {
+      hambugerMenu.style.display = 'none';
+      closeBtn.style.display = 'none';
+      hamburgerMenuIcon.style.display = 'block';
+  };
+
+
   document.body.addEventListener('htmx:configRequest', (e) => {
     e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     })

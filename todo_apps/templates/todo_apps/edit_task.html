@@ -2,21 +2,13 @@
 {% bootstrap_css %}
 {% load widget_tweaks %}
 
+  
 
+ 
 
-{% comment %}     <p>Edit task:</p>
-
-    <form method='post' action="{% url 'todo_apps:edit_task' task.id %}" class="modal-content">
-        {% csrf_token %}
-        {{ form }}
-        <div>
-            <button name='submit'>Save</button>
-            <a href="{% url 'todo_apps:delete_task' task.id %}">Delete</a>
-        </div>
-    </form>  {% endcomment %} 
-    
     <form hx-post="{% url 'todo_apps:edit_task'  task.id %}">
         {% csrf_token %}
+        
         <div class="modal-header">
             
           <h5 class="modal-title">Edit Task</h5>          
@@ -25,7 +17,7 @@
         <div class="modal-body overflow-auto pb-4">
           <div class="form-check mt-2">
             <strong>Mark as completed</strong>
-            {% render_field form.status|attr:"type:checkbox" class="form-check-input" id="flexCheckDefault" %}
+            {% render_field form.status|attr:"type:checkbox" class="form-check-input" id="flexCheckDefault"  %}
           </div>
 
             <div class="form-group mt-4">
@@ -77,6 +69,26 @@
 
 
     <script>
+        // Get the success alert  
+
+        var alertSuccess = document.getElementById("alertSuccess");
+
+        // Get alertTextSuccess
+
+        var alertText = document.getElementById("alertText");
+
+        // Get the delete alert  
+
+        var alertDelete = document.getElementById("alertDelete");
+
+        // Get alertTextDelete
+ 
+        var alertTextDelete = document.getElementById("alertTextDelete");
+
+        // Get Mark as completed checkbox
+
+        var checkbox = document.getElementById("flexCheckDefault");
+
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
         
@@ -95,9 +107,20 @@
         // Get the button save
         var saveBtn = document.getElementById("save-edit-task")
 
-        saveBtn.onclick = function() {
-            setTimeout(() => {window.location.reload(true)}, 10);
-        }
+
+      
+          
+
+       saveBtn.onclick = function() {
+          if (checkbox.checked === true) {
+            alertSuccess.style.display = "block";
+            alertText.innerHTML = "Task has been completed!";
+          } else  {
+            alertSuccess.style.display = "block";
+            alertText.innerHTML = "Task has been updated!";
+          }
+            setTimeout(() => {window.location.reload(true)}, 1500);
+        }  
 
         // Get the button cancel
         var cancelBtn = document.getElementById("cancel-task")
@@ -110,7 +133,9 @@
         var deleteBtn = document.getElementById("delete-task")
 
         deleteBtn.onclick = function() {
-            setTimeout(() => {window.location.reload(true)}, 10);
+            alertDelete.style.display = "block";
+            alertTextDelete.innerHTML = "Task has been deleted!"
+            setTimeout(() => {window.location.reload(true)}, 1500);
         }
 
     </script>

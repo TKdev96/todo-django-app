@@ -7,7 +7,7 @@
         display: none; /* Hidden by default */
         position: fixed; /* Stay in place */
         z-index: 4; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
+        padding-top: 25px; /* Location of the box */
         left: 0;
         top: 0;
         width: 100%; /* Full width */
@@ -24,9 +24,18 @@
         padding: 20px;
         border: 1px solid #888;
         width: 50%;
-        max-height: 90%;
+        max-height: 99%;
         overflow-y: auto; 
         }
+
+        /* Modal Content Mobile View */
+        @media (max-width: 992px) {
+            .modal-content {
+                width: 99%;
+                height: 99%;
+                padding: 0px;
+                }
+          }
 
         /* The Close Button */
         .close {
@@ -49,6 +58,28 @@
         .task-item:hover {
             color: #6f42c1;
         }
+
+        .alert {
+            display: none;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            z-index: 6;
+            max-width: 50%;
+        }
+
+        /* Modal Content Mobile View */
+        @media (max-width: 992px) {
+            .modal-content {
+                width: 99%;
+                height: 99%;
+                padding: 0px;
+            }
+
+            .alert {
+                max-width: 99%;
+            }
+
+          }
 </style>   
 
 
@@ -98,7 +129,12 @@
 
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
-
+                    <div class="alert alert-success alertsuccess" id="alertSuccess" role="alert">
+                        <div id="alertText"></div>
+                    </div>
+                    <div class="alert alert-danger" id="alertDelete"  role="alert">
+                        <div id="alertTextDelete"></div>
+                    </div>
                     <!-- Modal content -->
                     <div id="dialog" class="modal-content" hx-target="this">
                     </div>

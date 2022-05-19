@@ -18,7 +18,7 @@ def delete_task(request, task_id):
     task_to_delete = Task.objects.get(id=task_id)
     task_to_delete.delete()
 
-    return redirect('todo_apps:tasks')    
+    #return redirect('todo_apps:tasks')    
 
 # Create your views here.
 
@@ -74,7 +74,7 @@ def new_task(request):
             #newtask.owner = request.user
             newtask.project = Project.objects.get(assigned_users=request.user)
             newtask.save()
-            return redirect('todo_apps:tasks')    
+            # return redirect('todo_apps:tasks') naprawia - usuniecie ładowania w zadań w modalu
 
     context = {'form': form}
     return render(request, 'todo_apps/new_task.html', context)
@@ -90,7 +90,7 @@ def edit_task(request, task_id):
             edit_task = form.save(commit=False)
             edit_task.project = Project.objects.get(assigned_users=request.user)
             edit_task.save()
-            return redirect('todo_apps:tasks')
+            # return redirect('todo_apps:tasks') usunięcie naprawia bląd ładowania widoku wewnątrz modala
 
 
     context = {'task': task, "form": form}

@@ -57,11 +57,19 @@
 
         <div class="modal-footer d-flex justify-content-end">
             <button class="d-inline btn btn-secondary" id="cancel-task">Cancel</button>
-            <button class="btn btn-success" id="save-edit-task" type="submit">Confirm</button>
+            <button class="btn btn-success" id="confirm-task" type="submit">Confirm</button>
         </div>
       </form>
 
       <script>
+        // Get the success alert  
+
+        var alertSuccess = document.getElementById("alertSuccess");
+
+        // Get alertText
+
+        var alertText = document.getElementById("alertText");
+
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
         
@@ -78,25 +86,18 @@
         }
 
         // Get the button save
-        var saveBtn = document.getElementById("save-edit-task")
+        var confirmBtn = document.getElementById("confirm-task")
 
-        saveBtn.onclick = function() {
-            setTimeout(() => {window.location.reload(true)}, 10);
+        confirmBtn.onclick = function() {
+            alertSuccess.style.display = "block";
+            alertText.innerHTML = "Task has been added!"
+            setTimeout(() => {window.location.reload(true)}, 1800);
         }
                 // Get the button cancel
         var cancelBtn = document.getElementById("cancel-task")
 
         cancelBtn.onclick = function() {
             modal.style.display = "none";
-        }
-
-
-
-     // Get the button save
-        var deleteBtn = document.getElementById("delete-task")
-
-        deleteBtn.onclick = function() {
-            setTimeout(() => {window.location.reload(true)}, 10);
         }
 
 
