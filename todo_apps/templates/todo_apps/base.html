@@ -1,129 +1,23 @@
 {% load bootstrap5 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.84.0">
+    <meta name="author" content="Tomasz Kaczmarczyk - TaskiDoo!">
     <title>TaskiDoo - PM Tool</title>
-
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-
-  <style>
-
-        html,
-        body {
-        overflow-x: hidden; /* Prevent scroll on narrow devices */
-        }
-
-        body {
-        padding-top: 56px;
-        }
-
-        @media (max-width: 993.98px) {
-        .offcanvas-collapse {
-            position: fixed;
-            top: 56px; /* Height of navbar */
-            bottom: 0;
-            left: 100%;
-            width: 100%;
-            padding-right: 1rem;
-            padding-left: 1rem;
-            overflow-y: auto;
-            visibility: hidden;
-            background-color: #343a40;
-            transition: transform .3s ease-in-out, visibility .3s ease-in-out;
-        }
-        .offcanvas-collapse.open {
-            visibility: visible;
-            transform: translateX(-100%);
-        }
-
-        .navbar-collapse {
-          display: none;
-        }
-
-        }
-
-        .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-        }
-
-        .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        color: rgba(255, 255, 255, .75);
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-        }
-
-        .nav-underline .nav-link {
-        padding-top: .75rem;
-        padding-bottom: .75rem;
-        font-size: .875rem;
-        color: #6c757d;
-        }
-
-        .nav-underline .nav-link:hover {
-        color: #007bff;
-        }
-
-        .nav-underline .active {
-        font-weight: 500;
-        color: #343a40;
-        }
-
-
-        .text-white-50 { color: rgba(255, 255, 255, .5); }
-
-        .bg-purple { background-color: #6f42c1; }
-
-
-
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      #hambugerMenuIcon {
-        display: block;
-      }
-
-      #navbarsExampleDefault {
-        display: none;
-      }
-
-      #closeBtn {
-        display: none;
-      }
-
-    </style>
-    
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
+
   {% if user.is_authenticated %}
   <body class="bg-light">
     
-        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" style="z-index:4;" aria-label="Main navigation">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" style="z-index:4;">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'todo_apps:index' %}"><i><b>TaskiDoo</i>!</b></a>
             <button class="navbar-toggler p-0 border-0" type="button" id="hamburgerMenuIcon">
@@ -160,49 +54,61 @@
         </nav>
 
         <div class="nav-scroller bg-body shadow-sm">
-        <nav class="nav nav-underline" aria-label="Secondary navigation">
-            <a class="nav-link active" aria-current="page" href="{% url 'todo_apps:tasks' %}">
+        <nav class="nav nav-underline">
+            <a class="nav-link" id="my_tasks"  href="{% url 'todo_apps:tasks' %}">
               My Tasks
             <span class="badge bg-light text-dark rounded-pill align-text-bottom">{{ tasks.count }}</span>
             </a>
-            <a class="nav-link" href="{% url 'todo_apps:all_tasks' %}">
+            <a class="nav-link" id="all_tasks" href="{% url 'todo_apps:all_tasks' %}">
               All Tasks
             <span class="badge bg-light text-dark rounded-pill align-text-bottom">{{ all_tasks.count}}</span>
             </a>
-            <a class="nav-link" href="{% url 'todo_apps:completed_tasks' %}">Completed Tasks</a>
+            <a class="nav-link" id="completed_tasks" href="{% url 'todo_apps:completed_tasks' %}">Completed Tasks</a>
         </nav>
         </div>
 
 {% endif %}
 
 {% block content %} {% endblock content %}
-          <!-- HTMX CDN -->
-  <script src="https://unpkg.com/htmx.org@1.7.0"></script> 
 
-  <!-- CSRF request in the headers -->
-  <script> 
-   //Get hamburger menu 
-  const hamburgerMenuIcon = document.getElementById("hamburgerMenuIcon");
-  const hambugerMenu = document.getElementById("navbarsExampleDefault");
-  const closeBtn = document.getElementById("closeBtn");
-  
-  hamburgerMenuIcon.onclick = function() {
-      hamburgerMenuIcon.style.display = 'none';
-      hambugerMenu.style.display = "block";
-      closeBtn.style.display = 'block';
-  };
+<footer class="footer text-center text-white">
+  <!-- Grid container -->
+  <div class="container pt-4">
+    <!-- Section: Social media -->
+    <section class="mb-4">
 
-  closeBtn.onclick = function() {
-      hambugerMenu.style.display = 'none';
-      closeBtn.style.display = 'none';
-      hamburgerMenuIcon.style.display = 'block';
-  };
+      <!-- Linkedin -->
+      <a
+        class="btn btn-link btn-floating btn-lg m-1 social-icon"
+        href="https://www.linkedin.com/in/tomasz-kaczmarczyk-4235a31a4/"
+        role="button"
+        ><i class="fab fa-linkedin"></i
+      ></a>
+      <!-- Github -->
+      <a
+        class="btn btn-link btn-floating btn-lg m-1 social-icon"
+        href="https://github.com/TKdev96"
+        role="button"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center text-dark p-3 footer-text">
+    © 2022 Copyright:
+    <a class="text-dark" href="#"><b><i>TaskiDoo</i>!</b></a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- HTMX CDN -->
+<script src="https://unpkg.com/htmx.org@1.7.0"></script> 
+<!-- JS Base-->
+<script src="{% static 'js/app.js' %}" type="text/javascript"></script>
 
 
-  document.body.addEventListener('htmx:configRequest', (e) => {
-    e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-    })
-  </script>
   </body>
 </html>
 

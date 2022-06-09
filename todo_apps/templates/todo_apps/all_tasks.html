@@ -1,90 +1,7 @@
 {% extends "todo_apps/base.html" %}
 {% block content %}
 
-<style>
-    /* The Modal (background) */
-        .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 4; /* Sit on top */
-        padding-top: 25px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 50%;
-        max-height: 99%;
-        overflow-y: auto; 
-        }
-
-        /* Modal Content Mobile View */
-        @media (max-width: 992px) {
-            .modal-content {
-                width: 99%;
-                height: 99%;
-                padding: 0px;
-                }
-          }
-
-        /* The Close Button */
-        .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-        }
-        
-        .task-item {
-            color: gray;
-        }
-        .task-item:hover {
-            color: #6f42c1;
-        }
-
-        .alert {
-            display: none;
-            margin: 0 auto;
-            margin-bottom: 20px;
-            z-index: 6;
-            max-width: 50%;
-        }
-
-        /* Modal Content Mobile View */
-        @media (max-width: 992px) {
-            .modal-content {
-                width: 99%;
-                height: 99%;
-                padding: 0px;
-            }
-
-            .alert {
-                max-width: 99%;
-            }
-
-          }
-</style>   
-
-
-
-<main class="container">
+<main class="container formBg">
     <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
         <svg style="margin-right: .650rem;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"></path>
@@ -96,32 +13,27 @@
         </div>
     </div>
 
-    <div class="mt-3 mb-5 p-3 bg-body rounded shadow-lg">
-        <div class="d-block text-end">
-            <button class="myBtn btn btn-outline-primary btn-sm" hx-get="{% url 'todo_apps:new_task' %}" hx-target="#dialog">+ Add task</a></button>
+    <div class="mt-3 mb-5 p-4 bg-body rounded shadow-lg">
+        <div class="d-block text-end mb-4">
+            <button class="myBtn btn btn-outline-primary" hx-get="{% url 'todo_apps:new_task' %}" hx-target="#dialog">+ Add task</a></button>
         </div>
 
         {% for task in all_tasks %}
-            <div class="d-flex text-muted pt-3">
-                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 1.200rem;" width="16" height="16" fill="currentColor" class="bi bi-pencil-square mt-3" viewBox="0 0 16 16">
+            <div class="d-flex mb-4 p-4 task-content">
+                <a class="myBtn d-block text-decoration-none" hx-trigger="click" hx-get="{% url 'todo_apps:edit_task' task.id %}" hx-target="#dialog"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square task-content-icon" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
                   </svg>
+                </a>  
 
-            <p class="pb-2 mb-0 small lh-sm" hx-trigger="click" hx-get="{% url 'todo_apps:edit_task' task.id %}" hx-target="#dialog">
-                <a class="myBtn d-block text-decoration-none task-item h6"><strong>{{ task.text_title }}</strong></a>
+            <p class="pb-2 mb-0 small text-muted lh-sm" hx-trigger="click" hx-get="{% url 'todo_apps:edit_task' task.id %}" hx-target="#dialog">
+                <a class="myBtn d-block text-decoration-none task-item task-content-h h6"><strong>{{ task.text_title }}</strong></a>
                 <small><strong>Due Date:</strong> {{ task.date_due }}</small></br>
                 <strong>Description:</strong> {{ task.text_desc }}</br>
                 <strong>Assigned to:</strong> {{ task.owner }}
-
-
-        
             </p>
-
-            
             </div>
 
-            <hr style="background-color: #dee2e6 1px solid">
         {% empty %}
             <p>No tasks added!</p>
         {% endfor %}    
@@ -145,26 +57,7 @@
   
 
 
-    </main>
-
-    <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
-        
-        // Get the button that opens the modal
-        var btn = document.getElementsByClassName("myBtn");
-        
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        
-        // When the user clicks the button, open the modal 
-        for (var i=0;i<btn.length; i++) {
-        btn[i].onclick = function() { 
-        modal.style.display = "block";
-        }}
-
-
-    </script>
+</main>
 
 
 

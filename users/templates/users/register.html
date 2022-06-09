@@ -1,7 +1,17 @@
-{% extends "todo_apps/base.html" %}
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% load widget_tweaks %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Tomasz Kaczmarczyk - CEO TaskiDoo!">
+    <title>TaskiDoo - PM Tool</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
 
 {% block content %}
 <style>
@@ -31,9 +41,9 @@
 
 <div id="loader"></div>
 
-    <form id="auth-form" style="margin: auto; max-width:400px;" class="form-group text-center" hx-post="{% url 'users:register' %}">
+    <form id="auth-form" style="margin: auto; max-width:400px; padding-left: 56px; padding-right: 56px;" class="form-group text-center mt-5" hx-post="{% url 'users:register' %}">
         {% csrf_token %}
-        <h1><a href="{% url 'todo_apps:index' %}" class="text-decoration-none text-dark">TaskiDoo</a></h1>
+        <h1><a href="{% url 'todo_apps:index' %}" class="text-decoration-none text-dark"><b><i>TaskiDoo</i>!</b></a></h1>
         <h5 class="font-weight-normal">Please enter login & password</h5>
 
         
@@ -56,11 +66,15 @@
                 {% render_field form.password2 class="form-control" placeholder="Enter the same password" type="password" %}
         </div>
 
-        <button class="btn btn-primary btn-lg btn-block mt-4" style="width: 400px; max-width:400px;" onclick="redirect()" name="submit">Register</button>
+        <button class="btn btn-primary btn-lg btn-block mt-4" style="width: 278px; max-width: 278 px;" onclick="redirect()" name="submit">Register</button>
         <input type="hidden" name="next" value="{% url 'todo_apps:tasks' %}"/>
+        
+        <div class="mt-2">
+          <a href="{% url 'users:login' %}">Back to login</a>  
+        </div>
     </form>
 </div>
-
+<script src="https://unpkg.com/htmx.org@1.7.0"></script> 
 <script>
     var loader = document.getElementById('loader')
     var form = document.getElementById('auth-form')
@@ -72,4 +86,5 @@
         window.location.href="/"}, 700); 
     }
   </script>
+</html>  
 {% endblock content %} 

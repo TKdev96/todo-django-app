@@ -1,20 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
 from .forms import SignUpForm, UpdateUserForm, UserCreationForm
 from todo_apps.models import Project, User
-from django.contrib.auth.views import PasswordChangeView
-from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
+
+
 
 # Create your views here.
-
-class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
-    template_name = 'users/change_password.html'
-    success_message = 'Successfully Change Your Password'
-    succes_url = reverse_lazy('index')
-
-
+@login_required
 def logout_view(request): 
     logout(request)
     return redirect('todo_apps:index')
@@ -48,4 +44,21 @@ def profile(request):
 
     context = {'user_form': user_form}
     return render(request, 'users/profile.html', context)
+
+@login_required
+def edit_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)  # Important!
+            messages.success(request, 'Your password was successfully updated!', extra_tags='alert-success')
+            #return redirect('edit_password')
+        else:
+            messages.error(request, 'Error, please enter passwords again.', extra_tags='alert-danger')    
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'users/edit_password.html', {
+        'form': form
+    })
 
