@@ -250,7 +250,7 @@ body {
 }
 
 .social-icon:hover {
-    color: #735EC1;
+    color: #0d6efd;
 }
 
 /* Modal Content Mobile View */
@@ -334,9 +334,10 @@ body {
     /* Safari */
     animation: spin 2s linear infinite;
     display: none;
-    margin: auto;
-    position: relative;
-    margin-top: 25vh;
+    text-align: center;
+    margin-top: -33vh;
+    margin-left: -2vw;
+    
 }
 
 #loading {

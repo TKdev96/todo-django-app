@@ -20,8 +20,9 @@
     {% if form.errors %}
     <p>Username and password isn't valid!</p>
     {% endif %}
+    
+    <h5 id="loading" class="font-weight-normal mt-5">Please waiting...</h5>
     <div id="loader"></div>
-    <h5 id="loading" class="font-weight-normal mt-4">Please waiting...</h5>
     <form id="auth-form" class="form-signin text-center" hx-post="{% url 'users:login' %}">
     {% csrf_token %}
     <div class="mt-5">
