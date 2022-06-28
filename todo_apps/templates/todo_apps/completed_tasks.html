@@ -26,7 +26,6 @@
             <p class="pb-2 mb-0 small text-muted lh-sm" hx-trigger="click" hx-get="{% url 'todo_apps:edit_task' task.id %}" hx-target="#dialog">
                 <a class="myBtn d-block text-decoration-none task-item task-content-h h6"><strong>{{ task.text_title }}</strong></a>
                 <small><strong>Due Date:</strong> {{ task.date_due }}</small></br>
-                <strong>Description:</strong> {{ task.text_desc }}</br>
                 <strong>Assigned to:</strong> {{ task.owner }}
             </p>
              </div>
