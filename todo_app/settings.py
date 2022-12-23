@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-d-+n+6no(rbz7m-4ghygm#$@2_apwp(r!j174deboydv49x5q7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['taskidoo.up.railway.app']
 
 
 # Application definition
